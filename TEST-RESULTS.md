@@ -1,8 +1,18 @@
 # Verification — integrated implementation
 
+## zfb 3.1.0 upgrade verification
+
+Date: 2026-10-01. Environment: Linux x64, Node 24.13.1, pnpm 10.12.1, Python Playwright 1.57.0 / Chromium 143.0.7499.4. Exact SDK, runtime and native binary: **3.1.0**.
+
+The full `PYTHON=.venv/bin/python pnpm b4push` gate ran inside the machine-wide browser guard and the repository heavy-guard wrapper: `verdict=PASS`, exit 0. All 80 Node tests, both real zfb checks/builds, public/local bundle isolation, 29 native workbench browser checks and 15 actual zfb browser groups passed, with no uncaught browser exceptions. Direct browser evidence includes local HTTP/SQLite restart persistence, mobile geometry and public network isolation.
+
+No application source migration was needed. Real D1/Queues, production authentication/providers, Safari and hardware IME remain outside this evidence as described below. No resources were deployed.
+
+## Historical zfb 3.0.0 integration evidence
+
 Date: 2026-10-01. Environment: macOS arm64, Node 24.13.0, pnpm 10.12.1, TypeScript 5.8.3, Python Playwright 1.57.0 / Chromium 143.0.7499.4. Exact zfb SDK, runtime and native binary: **3.0.0** (embedded esbuild 0.25.12).
 
-## Passed locally
+### Passed locally
 
 The complete `PYTHON=../venv/bin/python pnpm b4push` gate passed under the machine-wide heavy/browser guards (`verdict=PASS`, exit 0). The Python path points to the session's isolated environment; use your own virtual environment as shown in README.
 
@@ -27,7 +37,7 @@ The 80 Node tests include memory/SQL contract parity, scoped access/idempotency,
 
 CI runs the same gate on main pushes and pull requests. See the GitHub Actions run for the pushed commit for its independent result; this file records local evidence. Generated logs/reports/screenshots are ignored locally and uploaded by CI, not committed as binary source artifacts.
 
-## Explicit limitations
+### Explicit limitations
 
 - **workerd/D1 and actual Cloudflare Queue delivery are not exercised.** Node SQLite tests validate SQL behavior through an adapter. The Worker handler factory is tested with injected ports and remains disabled by default.
 - Production authentication, real host authorization, a live provider, cost policy, retention/erasure and workspace quotas are not implemented. No resources were deployed and no model calls were made.
