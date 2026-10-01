@@ -1,6 +1,6 @@
 # Agent conversations
 
-A zfb 3.0.0 recipe for conversation history, queued agent runs, versioned skills, and reviewed host changes. Both the public showcase and the persistent local app render with **real zudo-react**. The provider and CMS are synthetic: no API key, model call, cloud account, or deployment is needed.
+A zfb 3.1.0 recipe for conversation history, queued agent runs, versioned skills, and reviewed host changes. Both the public showcase and the persistent local app render with **real zudo-react**. The provider and CMS are synthetic: no API key, model call, cloud account, or deployment is needed.
 
 ## Run locally
 
