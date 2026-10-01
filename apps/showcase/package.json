@@ -1,0 +1,11 @@
+{
+  "name": "@takazudo/agent-convos-showcase", "version": "0.0.0", "private": true, "type": "module",
+  "scripts": {
+    "stage": "node ../../scripts/stage-showcase.mjs",
+    "dev": "pnpm stage && zfb dev",
+    "build": "pnpm stage && zfb build",
+    "check": "pnpm stage && zfb check"
+  },
+  "dependencies": { "@takazudo/zfb-runtime": "3.0.0" },
+  "devDependencies": { "@takazudo/zfb": "3.0.0" }
+}

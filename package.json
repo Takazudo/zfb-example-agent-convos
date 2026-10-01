@@ -1,0 +1,29 @@
+{
+  "name": "zfb-example-agent-convos",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.12.1",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "build:core": "tsc -p tsconfig.core.json",
+    "test": "node scripts/test.mjs",
+    "test:browser": "python3 tests/browser/smoke.py",
+    "dev:local": "pnpm prepare:local && node dev/server.mjs",
+    "dev": "pnpm --dir apps/showcase dev",
+    "build": "pnpm --dir apps/showcase build",
+    "check:zfb": "pnpm --dir apps/showcase check",
+    "b4push": "bash scripts/run-b4push.sh",
+    "build:workbench": "node scripts/build-workbench.mjs",
+    "verify:offline": "node scripts/test.mjs",
+    "test:zfb-browser": "python3 tests/browser/zfb_smoke.py",
+    "build:local": "pnpm --dir apps/local build",
+    "prepare:local": "pnpm build:core && pnpm build:workbench && pnpm build && pnpm build:local",
+    "typecheck": "pnpm build:core && pnpm check:zfb && pnpm --dir apps/local check"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}

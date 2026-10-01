@@ -1,0 +1,17 @@
+{
+  "name": "@takazudo/agent-convos-local",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "stage": "node ../../scripts/stage-local.mjs",
+    "check": "pnpm stage && zfb check",
+    "build": "pnpm stage && zfb build"
+  },
+  "dependencies": {
+    "@takazudo/zfb-runtime": "3.0.0"
+  },
+  "devDependencies": {
+    "@takazudo/zfb": "3.0.0"
+  }
+}

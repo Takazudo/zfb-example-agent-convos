@@ -1,0 +1,4 @@
+pre-push:
+  commands:
+    full-gate:
+      run: pnpm b4push

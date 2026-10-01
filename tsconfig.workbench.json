@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "AMD",
+    "moduleResolution": "Node",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noEmitOnError": true,
+    "rootDir": ".",
+    "outFile": "build/workbench-mock.js",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "files": [
+    "dev/mock-entry.ts"
+  ]
+}
