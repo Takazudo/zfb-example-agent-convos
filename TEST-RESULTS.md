@@ -1,5 +1,24 @@
 # Verification — integrated implementation
 
+## zfb 4.3.0 upgrade verification
+
+Date: 2026-10-10. Refreshed main: `a21cc1081f656027d075c1e09c425e65f368f3ae`. Local environment: Linux x64, Node 24.19.0, pnpm 10.12.1 invoked through npm exec. Both apps pin SDK/runtime to exact published **4.3.0**; native preflight reports 4.3.0 and embedded esbuild 0.25.12. No adapter is used, no bundler override was added, and historical design/reference evidence is retained.
+
+Local commands passed:
+
+- `npm --cache /tmp/zfb-npm-cache view @takazudo/zfb@4.3.0 version dependencies optionalDependencies dist.integrity --json`
+- `npm --cache /tmp/zfb-npm-cache view @takazudo/zfb-runtime@4.3.0 version dist.integrity --json`
+- `npm --cache /tmp/zfb-npm-cache exec --yes --package=pnpm@10.12.1 -- pnpm install --store-dir /workspace/shared/pnpm-store`
+- `node scripts/verify-zfb.mjs` (both apps)
+- `node scripts/test.mjs` (80 passed, zero failed/skipped)
+- `npm --cache /tmp/zfb-npm-cache exec --yes --package=pnpm@10.12.1 -- pnpm --dir apps/showcase check`
+- `npm --cache /tmp/zfb-npm-cache exec --yes --package=pnpm@10.12.1 -- pnpm --dir apps/local check`
+- `python3 -m py_compile tests/browser/zfb_smoke.py` and `git diff --check`
+
+The managed approval policy rejected runtime-bridge restoration and the read-only personal-context loader for accessing `/root/.codex`. No workaround was attempted. Local heavy builds/browser runs were not run without the required shared guard; the unchanged Verify workflow owns the complete `pnpm b4push` gate on the draft PR. Consult the PR's exact-head CI result for both actual builds, 29 workbench checks and 16 real-zfb browser groups, including the new asset-failure assertion. Pending or failed CI is not a pass.
+
+Tests use checked-in synthetic scenarios and temporary SQLite databases in a fresh checkout. No private conversation data was read or uploaded. The only workflow verifies and uploads synthetic test evidence; it has no publish/deploy job. Upstream #3879 and existing consumer issues/PRs were inspected; no new upstream defect was established or filed. macOS/Windows/native ARM, Firefox/WebKit/Safari, hardware IME, real D1/Queues and live providers remain unverified.
+
 ## zfb 3.1.0 upgrade verification
 
 Date: 2026-10-01. Environment: Linux x64, Node 24.13.1, pnpm 10.12.1, Python Playwright 1.57.0 / Chromium 143.0.7499.4. Exact SDK, runtime and native binary: **3.1.0**.
