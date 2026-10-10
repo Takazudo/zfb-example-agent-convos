@@ -15,7 +15,7 @@ Native mock workbench                         Local SQLite workbench
                                                     persistent synthetic host receipts
 
 Public zfb showcase
-  zfb 3 static shell + zudo-react island
+  zfb 4.3.0 static shell + zudo-react island
     same controller/client/service, memory-only import graph
     installed SDK/build/direct-browser hydration verified
 ```
@@ -71,7 +71,7 @@ Conversation listing currently loads the scoped repository list before filtering
 
 ## Reference provenance
 
-The issue and tagged v3 API were read through the GitHub connector. The implementation target is tag `v3.0.0`, commit `8219310917c4e697a5c9eb292bd68b4ae7a7cefc`. The relevant upstream sources are:
+The issue and tagged v3 API were read through the GitHub connector. The original implementation target was tag `v3.0.0`, commit `8219310917c4e697a5c9eb292bd68b4ae7a7cefc`. The relevant upstream sources are:
 
 - `packages/zfb/src/zudo-react/index.ts`: signals, scope, For/Show and refs.
 - `docs/src/content/docs/zudo-react/forms.mdx`: writable models, DOM-wins hydration, composition and static select limits.

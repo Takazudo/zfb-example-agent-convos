@@ -13,7 +13,10 @@ class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(QuietHandler,directory=str(DIST)))
 Thread(target=server.serve_forever,daemon=True).start()
-checks=[];errors=[];requests=[]
+checks=[];errors=[];requests=[];asset_errors=[]
+def watch_assets(page):
+    page.on('response',lambda r:asset_errors.append(f'{r.status} {r.url}') if '/assets/' in r.url and not r.ok else None)
+    page.on('requestfailed',lambda r:asset_errors.append(f'{r.failure} {r.url}') if '/assets/' in r.url else None)
 def passed(name): checks.append(name); print('PASS',name,flush=True)
 def js(page,expression): assert page.evaluate(expression), expression
 def wait_server(base, child):
@@ -28,6 +31,7 @@ try:
   browser=p.chromium.launch(executable_path=os.getenv('CHROMIUM_PATH') or None)
   try:
    page=browser.new_page(viewport={'width':1440,'height':1000},accept_downloads=True)
+   watch_assets(page)
    page.set_default_timeout(10000);page.on('pageerror',lambda e:errors.append(str(e)))
    page.on('request',lambda r:requests.append(r.url))
    held=[];page.route('**/assets/*.js',lambda route:held.append(route))
@@ -157,6 +161,7 @@ try:
         try:
          wait_server(localbase,child)
          local=browser.new_page(viewport={'width':1440,'height':1000});local.on('pageerror',lambda e:errors.append(str(e)))
+         watch_assets(local)
          response=local.goto(localbase);assert response.status==200
          expect(local.locator('[data-zfb-island-mounted]').first).to_be_visible()
          expect(local.locator('.ac-proposal-status')).to_have_text('Needs review')
@@ -179,6 +184,8 @@ try:
          passed('separate zfb HTTP UI accepts, reviews, applies and persists across server restart')
         finally:
          child.terminate();child.wait(timeout=10)
+   assert not asset_errors,asset_errors
+   passed('generated assets load successfully in both apps and after local reload')
    assert not errors,errors
    passed('no uncaught browser exceptions')
    (OUT/'zfb-browser-results.json').write_text(json.dumps({'checks':checks,'exceptions':errors,'mode':'actual-zfb-build-direct-browser'},indent=2)+'\n')
