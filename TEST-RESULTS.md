@@ -1,5 +1,41 @@
 # Verification — integrated implementation
 
+## zfb 4.4.0 upgrade verification
+
+Date: 2026-10-13. Default branch `main`, refreshed base `3154e7e410c097ec722e5c7ddfdada1f502a6d8e`. Linux x64, Node 24.19.0, pnpm 10.12.1, Python Playwright 1.57.0, system Chromium 154.0.8037.57. Both apps move exact published SDK/runtime pins from **4.3.0 to 4.4.0**; the native binary and slugify dependency move in lockstep. TypeScript and Hono remain unchanged.
+
+The current `dev-bump-zudo-deps` resolver from `Takazudo/claude-settings@4d8315a0ead56dac135ee7d576791371333ca101` scanned all three manifests: four stable-channel bumps, no skips, floating tags, errors or graduation warnings. Runtime's exact SDK peer is satisfied. There is no `ZUDO_DEPS_PINS.md` or upstream-vendored scaffold; staging regenerates copies of this repository's own sources, and generated output remains ignored.
+
+### Published impact assessed
+
+Compared actual lockfile versions 4.3.0 with published 4.4.0 tarballs using `npm diff`, including SDK/package exports and runtime JavaScript/declarations. SDK and slugify tarball changes are package-version metadata only. Runtime changes concern rejected History writes and Back/Forward restoration of browser-created fragment entries; the demo does not use ClientRouter. Release notes through 4.3.1, 4.3.2, 4.3.3 and 4.4.0 also cover MDX wind attribute extraction and native YAML parser budget/performance/tag handling. These TSX apps use `wind: false` and no YAML frontmatter, so no application API adaptation was required. Exact-version preflight and current setup documentation were synchronized.
+
+Published `gitHead` metadata is absent. Verified upstream tags instead: `v4.3.0` = `689dfbfcfe4154aaccffe74d14bb5aadfef3ec6a`; `v4.4.0` = `29377d1c0bfd607dea6d654557e46ff7bf536b2e`. Read the release-specific changelog files under `docs/src/content/docs/changelog/{zfb,zfb-runtime}/` at the new tag. No new upstream defect was established.
+
+### Local gates passed on both versions
+
+The frozen 4.3.0 baseline passed 80 Node tests, both real app checks/builds, public/local bundle isolation, 29 direct workbench checks and 16 real-zfb browser groups. The initial full baseline run reached the final browser suite but could not find Playwright's downloaded browser; CDN downloads are forbidden in this environment. Rerunning that suite with the supported `CHROMIUM_PATH=/usr/bin/chromium` setting passed under the shared guard. No assertions or tests were changed.
+
+After updating, the complete gate passed in one run with `heavy-guard: verdict=PASS exit=0 secs=52`:
+
+```sh
+CHROMIUM_PATH=/usr/bin/chromium PYTHON=/tmp/agent-convos-venv/bin/python \
+  npm --cache /tmp/agent-convos-npm-cache exec --yes --package=pnpm@10.12.1 -- \
+  bash /workspace/portable-codex-home-v51/.codex/scripts/heavy-guard.sh -- pnpm b4push
+```
+
+- Exact installed SDK/runtime/native binary preflight: 4.4.0 in both apps.
+- Strict core/Worker TypeScript and 80 Node unit/contract/HTTP/SQLite tests: passed, zero failed/skipped.
+- Both real zfb checks/builds and generated public/local adapter isolation: passed.
+- Direct-browser workbench: 29 checks passed. Actual zfb browser: 16 groups passed, zero uncaught exceptions or failed generated assets.
+- Hydration input retention, keyed composer/caret/diffs, reviewed effects, skill versions, stale proposals, retry/cancel/reconnect, synthetic IME, mobile dialogs, scroll anchoring and HTTP/SQLite restart persistence: passed.
+- Geometry at 360/390/768/1440 and no public API/model/external requests: passed.
+- Post-update `pnpm install --frozen-lockfile` and `git diff --check`: passed.
+
+Visual parity: RGB pixel comparison against baseline screenshots reported **zero changed pixels** for `zfb-390.png` (390×900), `zfb-1440.png` (1440×900), `zfb-skills.png`, `zfb-embedded.png` and `zfb-sqlite.png` (each 1440×1000). Desktop/mobile and local SQLite screenshots were also visually inspected: composer stays visible, transcript layout and proposal cards are retained, and no new overflow appears. Evidence is local/ignored under `evidence/`; baseline copies and command logs are in `/tmp/agent-convos-audit/` for this session. CI uploads its own synthetic evidence.
+
+No deployment, package publication or live-provider operation occurred. Actual workerd/D1 and Cloudflare Queues, production auth/providers, other operating systems/browsers and hardware IME remain the existing integration limits below; Node SQLite and injected Worker ports are not claimed as those runtime proofs. Consult the PR's exact-head Verify check for independent CI status.
+
 ## zfb 4.3.0 upgrade verification
 
 Date: 2026-10-10. Refreshed main: `a21cc1081f656027d075c1e09c425e65f368f3ae`. Local environment: Linux x64, Node 24.19.0, pnpm 10.12.1 invoked through npm exec. Both apps pin SDK/runtime to exact published **4.3.0**; native preflight reports 4.3.0 and embedded esbuild 0.25.12. No adapter is used, no bundler override was added, and historical design/reference evidence is retained.
