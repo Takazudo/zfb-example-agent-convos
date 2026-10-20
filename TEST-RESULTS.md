@@ -1,5 +1,14 @@
 # Verification — integrated implementation
 
+## zfb 4.5.4 upgrade verification
+
+Date: 2026-10-20. Base main: `3154e7e`. Local environment: Linux x64, Node 22.22.0, pnpm 10.12.1 (corepack), Python Playwright 1.57.0 driving the preinstalled Chromium via `CHROMIUM_PATH`. Both apps pin SDK/runtime to exact published **4.5.4** (4.3.0 → 4.5.4; the intervening changelogs list no breaking change for zudo-react, runtime or CLI usage here).
+
+- `pnpm b4push` — exit 0: verify-zfb (both apps), Node tests, both real zfb checks/builds, workbench browser checks and real-zfb browser groups all PASS, no uncaught browser exceptions.
+- Dogfood: a server-only edit to `apps/showcase/layouts/default.tsx` (page title) left `dist/assets/islands-*.js` byte-identical (the 4.5.4 island build-identity fix); `zfb dev` served `/` with 200 and picked up the same edit live.
+
+No application source migration was needed. No resources were deployed.
+
 ## zfb 4.3.0 upgrade verification
 
 Date: 2026-10-10. Refreshed main: `a21cc1081f656027d075c1e09c425e65f368f3ae`. Local environment: Linux x64, Node 24.19.0, pnpm 10.12.1 invoked through npm exec. Both apps pin SDK/runtime to exact published **4.3.0**; native preflight reports 4.3.0 and embedded esbuild 0.25.12. No adapter is used, no bundler override was added, and historical design/reference evidence is retained.
