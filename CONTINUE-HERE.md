@@ -1,6 +1,6 @@
 # Continuation
 
-The original checkpoint is now integrated into the repository. Start with README.md for install, build and run commands. The production-renderer gap is resolved: exact zfb 4.3.0 builds the public mock and a separate local HTTP/SQLite UI from shared zudo-react components.
+The original checkpoint is now integrated into the repository. Start with README.md for install, build and run commands. The production-renderer gap is resolved: exact zfb 4.5.4 builds the public mock and a separate local HTTP/SQLite UI from shared zudo-react components.
 
 ## Implemented in this continuation
 
