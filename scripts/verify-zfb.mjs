@@ -12,6 +12,6 @@ for(const name of ['zfb','zfb-runtime']){
 const bin=resolve(app,'node_modules/@takazudo/zfb/bin/zfb.mjs');
 const r=spawnSync(process.execPath,[bin,'--version'],{cwd:app,encoding:'utf8'});
 process.stdout.write(r.stdout??'');process.stderr.write(r.stderr??'');
-if(r.status!==0||!/(?:^|\s)4\.5\.4(?:\s|$)/.test(r.stdout??'')){console.error('BLOCKED: matching executable could not be confirmed.');process.exit(1);}
+if(r.status!==0||!/(?:^|\s)4\.6\.0(?:\s|$)/.test(r.stdout??'')){console.error('BLOCKED: matching executable could not be confirmed.');process.exit(1);}
 }
 console.log('Installed SDK, runtime and binary identify as 4.6.0. Actual build and browser checks remain required.');
