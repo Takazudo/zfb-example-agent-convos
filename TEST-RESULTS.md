@@ -1,5 +1,15 @@
 # Verification — integrated implementation
 
+## zfb 4.6.0 upgrade verification
+
+Date: 2026-10-21. Base main: `783981e`. Local environment: Linux x64, Node 22.22.0, pnpm 10.12.1. Both apps pin SDK/runtime to exact published **4.6.0** (4.5.4 → 4.6.0; the changelogs list build fixes only and no runtime change).
+
+- `pnpm typecheck`, `pnpm build` and `pnpm test` — exit 0, identical to the 4.5.4 baseline run in the same checkout.
+- Built showcase output differs from 4.5.4 only in the per-release island build token (`data-zfb-build` and the hashed `islands-*.js` name).
+- Browser: `zfb preview` of the showcase in headless Chromium hydrates its island with no page or console errors.
+
+The full `pnpm b4push` gate (Python Playwright browser groups) runs in the Verify workflow on the PR. No application source migration was needed. No resources were deployed.
+
 ## zfb 4.5.4 upgrade verification
 
 Date: 2026-10-20. Base main: `3154e7e`. Local environment: Linux x64, Node 22.22.0, pnpm 10.12.1 (corepack), Python Playwright 1.57.0 driving the preinstalled Chromium via `CHROMIUM_PATH`. Both apps pin SDK/runtime to exact published **4.5.4** (4.3.0 → 4.5.4; the intervening changelogs list no breaking change for zudo-react, runtime or CLI usage here).

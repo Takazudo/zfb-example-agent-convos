@@ -15,7 +15,7 @@ Native mock workbench                         Local SQLite workbench
                                                     persistent synthetic host receipts
 
 Public zfb showcase
-  zfb 4.5.4 static shell + zudo-react island
+  zfb 4.6.0 static shell + zudo-react island
     same controller/client/service, memory-only import graph
     installed SDK/build/direct-browser hydration verified
 ```
