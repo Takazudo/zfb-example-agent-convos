@@ -9,9 +9,9 @@
     "build": "pnpm stage && zfb build"
   },
   "dependencies": {
-    "@takazudo/zfb-runtime": "4.6.0"
+    "@takazudo/zfb-runtime": "4.7.0"
   },
   "devDependencies": {
-    "@takazudo/zfb": "4.6.0"
+    "@takazudo/zfb": "4.7.0"
   }
 }

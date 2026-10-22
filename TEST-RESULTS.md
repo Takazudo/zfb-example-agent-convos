@@ -1,5 +1,16 @@
 # Verification — integrated implementation
 
+## zfb 4.7.0 upgrade verification
+
+Date: 2026-10-22. Base main: `b738f58`. Local environment: Linux x64, Node 22.22.0, pnpm 10.12.1. Both apps pin SDK/runtime to exact published **4.7.0** (4.6.0 → 4.7.0: Rolldown becomes the default page/island bundler and the JS engine moves to the direct V8 host; commands, config and the island contract are unchanged).
+
+- `pnpm b4push` — exit 0 (Python Playwright 1.57.0, preinstalled Chromium via `CHROMIUM_PATH`): verify-zfb (both apps), Node tests, both real zfb checks/builds, workbench browser checks and real-zfb browser groups all PASS, no uncaught browser exceptions.
+- `pnpm typecheck`, `pnpm build` and `pnpm test` — exit 0, as on the 4.6.0 baseline run in the same checkout.
+- Built showcase output keeps the same file set; the island bundle bytes and hash change, as expected with the Rolldown bundler.
+- Browser: the built showcase in headless Chromium mounts its island and island buttons respond with no page or console errors.
+
+The `scripts/verify-zfb.mjs` binary-version regex is updated to 4.7.0 along with the package pins. No application source migration was needed. No resources were deployed.
+
 ## zfb 4.6.0 upgrade verification
 
 Date: 2026-10-21. Base main: `783981e`. Local environment: Linux x64, Node 22.22.0, pnpm 10.12.1. Both apps pin SDK/runtime to exact published **4.6.0** (4.5.4 → 4.6.0; the changelogs list build fixes only and no runtime change).
