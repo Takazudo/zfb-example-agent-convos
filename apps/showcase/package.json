@@ -6,6 +6,6 @@
     "build": "pnpm stage && zfb build",
     "check": "pnpm stage && zfb check"
   },
-  "dependencies": { "@takazudo/zfb-runtime": "4.6.0" },
-  "devDependencies": { "@takazudo/zfb": "4.6.0" }
+  "dependencies": { "@takazudo/zfb-runtime": "4.7.0" },
+  "devDependencies": { "@takazudo/zfb": "4.7.0" }
 }
